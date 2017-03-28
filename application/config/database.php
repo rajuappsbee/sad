@@ -82,7 +82,7 @@ $db['default'] = array(
 	'password' => 'wbuj4*!Wa1',
 	'database' => 'saddb',
 	//'database' => 'dbsad',
-	'dbdriver' => 'mysql',
+	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
