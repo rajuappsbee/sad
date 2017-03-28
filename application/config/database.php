@@ -75,11 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '35.163.73.105',
-	//'hostname' => 'localhost',
+	//'hostname' => '35.163.73.105',
+	'hostname' => 'localhost',
 	'username' => 'root',
-	//'password' => '123456',
-	'password' => 'wbuj4*!Wa1',
+	'password' => '123456',
+	//'password' => 'wbuj4*!Wa1',
 	'database' => 'dbsad',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
