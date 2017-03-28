@@ -23,8 +23,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-//$config['base_url'] = 'http://35.165.166.90/sad';
-$config['base_url'] = 'http://localhost/sad';
+$config['base_url'] = 'http://stopalldistractions.com/sad';
+//$config['base_url'] = 'http://localhost/sad';
 
 /*
 |--------------------------------------------------------------------------
