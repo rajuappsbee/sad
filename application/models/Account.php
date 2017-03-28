@@ -40,8 +40,7 @@ class Account extends CI_Model {
 	}
 
 	public function getAccount($account_id){
-		$base_url = base_url();
-		$base_url = 'http://192.168.0.198/sad/';
+		$base_url = 'http://stopalldistractions.com/sad/';
 		$this->CI->db->select( "id, aemail, afirstname, alastname, aprofile_photo" )->from('accounts')->where( "id", $account_id );
 		$query = $this->CI->db->get();
 		$row = $query->row();
