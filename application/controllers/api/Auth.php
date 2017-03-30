@@ -412,7 +412,7 @@ class Auth extends REST_Controller {
         $sosData['snumber'] = $this->input->post('snumber');
         $data['id'] = $this->input->post('s_id');
 
-        $apasscodeData = $this->Account->getAccountField($data['id'],'apasscode');
+        $apasscodeData = $this->Account->getAccountField($sosData['account_id'],'apasscode');
 
         if($data['id'] > 0){
             $updStatus = $this->Account->updateSos($sosData,$data['id']);
@@ -428,7 +428,7 @@ class Auth extends REST_Controller {
 
         if($sos_id > 0){
             $result = new stdClass();
-            $result->apasscode = $apasscodeData;
+            $result->apasscode = $apasscodeData->apasscode;
             $result->sosData = $sosData;
             $response = [
                 'status' => TRUE,
@@ -450,12 +450,12 @@ class Auth extends REST_Controller {
     public function getSos_post(){
 
         $data['id'] = $this->input->post('accountId');
-        $apasscodeData = $this->Account->getAccountField($data['id'],'apasscode');
+        $apasscodeData = $this->Account->getAccountField($sosData['account_id'],'apasscode');
         $sosData = $this->Account->getSos($data['id']);
 
         if(!empty($sosData)){
             $result = new stdClass();
-            $result->apasscode = $apasscodeData;
+            $result->apasscode = $apasscodeData->apasscode;
             $result->sosData = $sosData;
             $response = [
                 'status' => TRUE,
