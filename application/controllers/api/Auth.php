@@ -450,7 +450,7 @@ class Auth extends REST_Controller {
     public function getSos_post(){
 
         $data['id'] = $this->input->post('accountId');
-        $apasscodeData = $this->Account->getAccountField($sosData['account_id'],'apasscode');
+        $apasscodeData = $this->Account->getAccountField($data['id'],'apasscode');
         $sosData = $this->Account->getSos($data['id']);
 
         if(!empty($sosData)){
