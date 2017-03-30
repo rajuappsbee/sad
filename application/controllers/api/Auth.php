@@ -408,6 +408,7 @@ class Auth extends REST_Controller {
 
         $sosData = array();
         $sosData['account_id'] = $this->input->post('accountId');
+        $sosData['sname'] = $this->input->post('sname');
         $sosData['snumber'] = $this->input->post('snumber');
         $data['id'] = $this->input->post('s_id');
 
