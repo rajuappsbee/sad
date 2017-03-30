@@ -145,7 +145,7 @@ class Auth extends REST_Controller {
                                 ),
                                 array(
                                     'key' => 'apasscode',
-                                    'value' => chr(rand(65,112)).rand(1111,9999),
+                                    'value' => rand(1111,9999),
                                     'escape' => true
                                 ),
                                 array(
@@ -428,7 +428,7 @@ class Auth extends REST_Controller {
 
         if($sos_id > 0){
             $result = new stdClass();
-            $result->apasscode = $apasscodeData->apasscode;
+            $result->apasscode = $apasscodeData;
             $result->sosData = $sosData;
             $response = [
                 'status' => TRUE,
@@ -455,7 +455,7 @@ class Auth extends REST_Controller {
 
         if(!empty($sosData)){
             $result = new stdClass();
-            $result->apasscode = $apasscodeData->apasscode;
+            $result->apasscode = $apasscodeData;
             $result->sosData = $sosData;
             $response = [
                 'status' => TRUE,
