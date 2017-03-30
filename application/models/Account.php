@@ -40,6 +40,7 @@ class Account extends CI_Model {
 	}
 
 	public function getAccount($account_id){
+		//$base_url = base_url();
 		$base_url = 'http://stopalldistractions.com/sad/';
 		$this->CI->db->select( "id, aemail, afirstname, alastname, aprofile_photo" )->from('accounts')->where( "id", $account_id );
 		$query = $this->CI->db->get();
@@ -51,7 +52,6 @@ class Account extends CI_Model {
 	}
 
 	public function getAccountField($account_id,$field){
-		$base_url = base_url();
 		$this->CI->db->select( $field )->from('accounts')->where( "id", $account_id );
 		$query = $this->CI->db->get();
 		$row = $query->row();
@@ -96,6 +96,27 @@ class Account extends CI_Model {
 		//echo $db->last_query(); die;
 		//return $db->affected_rows();
 		return true;
+	}
+
+	public function addSos($sosData){
+		$db = $this->CI->db;
+		$db->insert('sosnumbers',$sosData);
+		return $this->db->insert_id();
+	}
+
+	public function getSos($account_id){
+		$this->CI->db->select( '*' )->from('sosnumbers')->where( "account_id", $account_id );
+		$query = $this->CI->db->get();
+		$res = $query->result_array();
+		return $res;
+	}
+
+	public function updateSos($sosData,$id){
+		$db = $this->CI->db;
+		$db->update("sosnumbers", $sosData, array( "id" => $id ));
+		//echo $db->last_query(); die;
+		return $db->affected_rows();
+		//return true;
 	}
 
 	public function updatePassword($data,$email){
