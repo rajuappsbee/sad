@@ -411,6 +411,8 @@ class Auth extends REST_Controller {
         $sosData['snumber'] = $this->input->post('snumber');
         $data['id'] = $this->input->post('s_id');
 
+        $apasscodeData = $this->Account->getAccountField($data['id'],'apasscode');
+
         if($data['id'] > 0){
             $updStatus = $this->Account->updateSos($sosData,$data['id']);
             $sos_id = $data['id'];
@@ -424,10 +426,13 @@ class Auth extends REST_Controller {
 
 
         if($sos_id > 0){
+            $result = new stdClass();
+            $result->apasscode = $apasscodeData->apasscode;
+            $result->sosData = $sosData;
             $response = [
                 'status' => TRUE,
                 'message' => $msg,
-                'response' => $sosData
+                'response' => $result
             ];
 
             $this->set_response($response, REST_Controller::HTTP_CREATED); // CREATED (201) being the HTTP response code
