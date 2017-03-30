@@ -144,6 +144,11 @@ class Auth extends REST_Controller {
                                     'escape' => true
                                 ),
                                 array(
+                                    'key' => 'apasscode',
+                                    'value' => chr(rand(65,112)).rand(1111,9999),
+                                    'escape' => true
+                                ),
+                                array(
                                     'key' => 'acreated',
                                     'value' => date('Y-m-d H:i:s'),
                                     'escape' => true
@@ -160,6 +165,13 @@ class Auth extends REST_Controller {
             }else{
 
                 $account_id = $this->Account->addAccount($accountData);
+
+                $sosData = array();
+                $sosData['snumber'] = '911';
+                $sosData['account_id'] = $account_id;
+                $sosData['screated'] = date('Y-m-d H:i:s');
+
+                $sos_id = $this->Account->addSos($sosData);
 
                 if($account_id) {
                     $accData = $this->Account->getAccount($account_id);
@@ -182,8 +194,7 @@ class Auth extends REST_Controller {
         }
     }
 
-    public function login_post()
-    {
+    public function login_post(){
         $data['email'] = $this->input->post('email');
         $data['password'] = $this->input->post('password');
 
@@ -217,8 +228,7 @@ class Auth extends REST_Controller {
         }
     }
 
-    public function getProfile_post()
-    {
+    public function getProfile_post(){
         $data['id'] = $this->input->post('accountId');
         $accountData = $this->Account->getAccount($data['id']);
 
@@ -240,8 +250,7 @@ class Auth extends REST_Controller {
         }
     }
 
-    public function changePassword_post()
-    {
+    public function changePassword_post(){
         $data['id'] = $this->input->post('accountId');
         $data['old_password'] = $this->input->post('old_password');
         $uData['apassword'] = $this->input->post('new_password');
@@ -390,6 +399,70 @@ class Auth extends REST_Controller {
             $this->set_response([
                 'status' => FALSE,
                 'message' => 'Profile speed does not found! Please try again.',
+                'response' => new stdClass()
+            ], REST_Controller::HTTP_OK);
+        }
+    }
+
+    public function setSos_post(){
+
+        $sosData = array();
+        $sosData['account_id'] = $this->input->post('accountId');
+        $sosData['snumber'] = $this->input->post('snumber');
+        $data['id'] = $this->input->post('s_id');
+
+        if($data['id'] > 0){
+            $updStatus = $this->Account->updateSos($sosData,$data['id']);
+            $sos_id = $data['id'];
+            $msg = 'Sos number updated successfully.';
+        }else{
+            $sosData['screated'] = date('Y-m-d H:i:s');
+            $sos_id = $this->Account->addSos($sosData);
+            $sosData['id'] = $sos_id;
+            $msg = 'Sos number added successfully.';
+        }
+
+
+        if($sos_id > 0){
+            $response = [
+                'status' => TRUE,
+                'message' => $msg,
+                'response' => $sosData
+            ];
+
+            $this->set_response($response, REST_Controller::HTTP_CREATED); // CREATED (201) being the HTTP response code
+        }else{
+            // Set the response and exit
+            $this->set_response([
+                'status' => FALSE,
+                'message' => 'Sos number does not updated! Please try again.',
+                'response' => new stdClass()
+            ], REST_Controller::HTTP_OK); // NOT_FOUND (404) being the HTTP response code
+        }
+    }
+
+    public function getSos_post(){
+
+        $data['id'] = $this->input->post('accountId');
+        $apasscodeData = $this->Account->getAccountField($data['id'],'apasscode');
+        $sosData = $this->Account->getSos($data['id']);
+
+        if(!empty($sosData)){
+            $result = new stdClass();
+            $result->apasscode = $apasscodeData->apasscode;
+            $result->sosData = $sosData;
+            $response = [
+                'status' => TRUE,
+                'message' => 'Sos numbers fetched successfully!',
+                'response' => $result
+            ];
+
+            $this->set_response($response, REST_Controller::HTTP_CREATED); // CREATED (201) being the HTTP response code
+        }else{
+            // Set the response and exit
+            $this->set_response([
+                'status' => FALSE,
+                'message' => 'Sos numbers are not found! Please try again.',
                 'response' => new stdClass()
             ], REST_Controller::HTTP_OK);
         }

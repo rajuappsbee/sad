@@ -95,5 +95,12 @@ $db['default'] = array(
 	'compress' => FALSE,
 	'stricton' => FALSE,
 	'failover' => array(),
-	'save_queries' => TRUE
+	'save_queries' => TRUE	
 );
+/*
+'hostname' => 'localhost',
+'username' => 'sadsusr',
+'password' => 'T{RM=Mc^8Fqg',
+'database' => 'saddb',
+'dbdriver' => 'mysqli',
+*/
