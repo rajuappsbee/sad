@@ -101,6 +101,13 @@ class Auth extends REST_Controller {
                 $account_id = $this->Account->accountExist($data['asocial_id']);
                 if(!$account_id){
                     $account_id = $this->Account->addAccount($accountData);
+
+                    $sosData = array();
+                    $sosData['snumber'] = '911';
+                    $sosData['account_id'] = $account_id;
+                    $sosData['screated'] = date('Y-m-d H:i:s');
+
+                    $sos_id = $this->Account->addSos($sosData);
                 }
                 
                 if($account_id) {
@@ -473,7 +480,7 @@ class Auth extends REST_Controller {
             // Set the response and exit
             $this->set_response([
                 'status' => FALSE,
-                'message' => 'Sos numbers are not found! Please try again.',
+                'message' => 'SOS numbers are not found! Please try again.',
                 'response' => new stdClass()
             ], REST_Controller::HTTP_OK);
         }
