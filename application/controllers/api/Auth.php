@@ -79,6 +79,11 @@ class Auth extends REST_Controller {
                                     'escape' => true
                                 ),
                                 array(
+                                    'key' => 'apasscode',
+                                    'value' => rand(1111,9999),
+                                    'escape' => true
+                                ),
+                                array(
                                     'key' => 'acreated',
                                     'value' => date('Y-m-d H:i:s'),
                                     'escape' => true
@@ -417,12 +422,12 @@ class Auth extends REST_Controller {
         if($data['id'] > 0){
             $updStatus = $this->Account->updateSos($sosData,$data['id']);
             $sos_id = $data['id'];
-            $msg = 'Sos number updated successfully.';
+            $msg = 'SOS number updated successfully.';
         }else{
             $sosData['screated'] = date('Y-m-d H:i:s');
             $sos_id = $this->Account->addSos($sosData);
             $sosData['id'] = $sos_id;
-            $msg = 'Sos number added successfully.';
+            $msg = 'SOS number added successfully.';
         }
 
 
@@ -441,7 +446,7 @@ class Auth extends REST_Controller {
             // Set the response and exit
             $this->set_response([
                 'status' => FALSE,
-                'message' => 'Sos number does not updated! Please try again.',
+                'message' => 'SOS number does not updated! Please try again.',
                 'response' => new stdClass()
             ], REST_Controller::HTTP_OK); // NOT_FOUND (404) being the HTTP response code
         }
@@ -459,7 +464,7 @@ class Auth extends REST_Controller {
             $result->sosData = $sosData;
             $response = [
                 'status' => TRUE,
-                'message' => 'Sos numbers fetched successfully!',
+                'message' => 'SOS numbers fetched successfully!',
                 'response' => $result
             ];
 
@@ -490,7 +495,7 @@ class Auth extends REST_Controller {
             $this->email->from($from_email, 'SAD'); 
             $this->email->to($to_email);
             $this->email->subject('Recover Password'); 
-            $this->email->message('Your new password is "'.$new_password.'". Please use it to login.'); 
+            $this->email->message('Your new password is "'.$uData['apassword'].'". Please use it to login.'); 
 
             //Send mail 
             if($this->email->send()){
@@ -515,7 +520,7 @@ class Auth extends REST_Controller {
             // Set the response and exit
             $this->set_response([
                 'status' => FALSE,
-                'message' => 'No users were found with this id!',
+                'message' => 'No users were found with this email!',
                 'response' => new stdClass()
             ], REST_Controller::HTTP_OK); // NOT_FOUND (404) being the HTTP response code
         }
