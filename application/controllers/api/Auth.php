@@ -494,7 +494,7 @@ class Auth extends REST_Controller {
 
         if(!empty($accountData)){
             $to_email = $accountData;
-            $uData['apassword'] = rand('1111,9999').rand('a','z');
+            $uData['apassword'] = rand('1111,9999').chr(rand('a','z'));
             $updPassword = $this->Account->updatePassword($uData,$to_email);
             //Load email library 
             $this->load->library('email'); 
