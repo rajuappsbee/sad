@@ -503,7 +503,7 @@ class Auth extends REST_Controller {
             $this->email->from($from_email, 'SAD'); 
             $this->email->to($to_email);
             $this->email->subject('Recover Password'); 
-            $this->email->message('Your new password is "'.$uData['apassword'].'". Please use it to login.'); 
+            $this->email->message('Your new password is "'.$new_password.'". Please use it to login.'); 
 
             //Send mail 
             if($this->email->send()){
